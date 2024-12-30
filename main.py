@@ -53,7 +53,7 @@ def get_random_domain(proxy_dict):
     url = f"https://emailfake.com/search.php?key={keyword}"
     
     try:
-        resp = requests.get(url, proxies=proxy_dict, timeout=30)
+        resp = requests.get(url, proxies=proxy_dict, timeout=60)
         resp.raise_for_status()
         domains = resp.json()
         return random.choice(domains) if domains else None
@@ -100,7 +100,7 @@ def send_otp(email, password, proxy_dict, account_num):
 
     try:
         response = requests.post(url, params=params, json=payload,
-                               headers=headers, proxies=proxy_dict, timeout=30)
+                               headers=headers, proxies=proxy_dict, timeout=60)
         result = response.json()
 
         if response.status_code == 200:
@@ -119,7 +119,7 @@ def login(id_token, proxy_dict, account_num):
     headers['Authorization'] = f"Bearer {id_token}"
 
     try:
-        response = requests.post(url, headers=headers, proxies=proxy_dict, timeout=30)
+        response = requests.post(url, headers=headers, proxies=proxy_dict, timeout=60)
         response.raise_for_status()
         print(f"{get_log_prefix(account_num)} {Fore.LIGHTGREEN_EX}Success Login{Style.RESET_ALL}")
         return response.json()
@@ -134,7 +134,7 @@ def set_reff(referral_code, token, proxy_dict, account_num):
     headers['Authorization'] = f"Bearer {token}"
 
     try:
-        response = requests.post(url, headers=headers, json=payload, proxies=proxy_dict, timeout=30)
+        response = requests.post(url, headers=headers, json=payload, proxies=proxy_dict, timeout=60)
         if response.status_code == 200:
             print(f"{get_log_prefix(account_num)} {Fore.LIGHTGREEN_EX}Success Referral{Style.RESET_ALL}")
             return True
